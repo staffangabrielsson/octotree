@@ -15,9 +15,14 @@ $(document).ready(() => {
       .map((url) => url.replace(/(.*?:\/\/[^/]+)(.*)/, '$1'))
       .concat('https://github.com')
 
+    if (`${location.protocol}//${location.host}` == 'https://bitbucket.org') {
+      return new BitBucket(store)
+    }
+
     return ~githubUrls.indexOf(`${location.protocol}//${location.host}`)
       ? new GitHub(store)
       : new GitLab(store)
+
   }
 
   function loadExtension() {

@@ -19,7 +19,7 @@ class Adapter {
     const folders = { '': [] }
     const $dummyDiv = $('<div/>')
     const {path, repo, node} = opts
-
+    console.log('_loadCodeTree');
     opts.encodedBranch = opts.encodedBranch || encodeURIComponent(decodeURIComponent(repo.branch))
 
     this._getTree(path, opts, (err, tree) => {
@@ -78,6 +78,13 @@ class Adapter {
               item.a_attr = {
                 href: `/${repo.username}/${repo.reponame}/${type}/${repo.branch}/${encodedPath}`
               }
+
+              if (item.url.indexOf('bitbucket') > -1) {
+                item.a_attr = {
+                  href: item.url
+                }
+              }
+
             }
             else if (type === 'commit') {
               let moduleUrl = submodules[item.path]
